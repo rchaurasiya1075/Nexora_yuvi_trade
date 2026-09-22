@@ -27,9 +27,8 @@ function TradeLocked() {
         Sign in, deposit, then trade
       </h1>
       <p className="mt-3 max-w-md text-center text-sm text-muted">
-        The desk is tied to your account. After login, request a deposit via
-        UPI, QR or bank. Admin approval credits paper USD. Tickets fill at the
-        live bid/ask.
+        Open the paper desk in one tap, or sign in. Tickets fill at the live
+        bid and ask. First account on this browser is admin.
       </p>
       <div className="mt-8">
         <LoginForm callbackURL="/trade" />

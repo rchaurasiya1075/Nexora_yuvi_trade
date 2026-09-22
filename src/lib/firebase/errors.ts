@@ -3,8 +3,8 @@ export function firebaseMessage(err: unknown): string {
     err && typeof err === "object" && "code" in err ? String((err as { code: string }).code) : "";
   const raw = err instanceof Error ? err.message : "Something went wrong.";
   const blob = `${code} ${raw}`;
-  if (/CONFIGURATION_NOT_FOUND|configuration-not-found|project-not-found/i.test(blob)) {
-    return "Firebase Authentication is not turned on yet. Open Firebase Console → Authentication → Get started, enable Email/Password, create Firestore, then retry.";
+  if (isAuthNotConfigured(err)) {
+    return "Firebase Authentication is not turned on yet. Using a paper desk on this browser instead.";
   }
   switch (code) {
     case "auth/email-already-in-use":
@@ -31,4 +31,14 @@ export function firebaseMessage(err: unknown): string {
       }
       return raw;
   }
+}
+
+export function isAuthNotConfigured(err: unknown): boolean {
+  const code =
+    err && typeof err === "object" && "code" in err ? String((err as { code: string }).code) : "";
+  const raw = err instanceof Error ? err.message : String(err ?? "");
+  const blob = `${code} ${raw}`;
+  return /CONFIGURATION_NOT_FOUND|configuration-not-found|auth\/operation-not-allowed|auth\/admin-restricted-operation/i.test(
+    blob,
+  );
 }

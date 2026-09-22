@@ -1,18 +1,60 @@
-export {
-  getMyOps,
-  claimAdmin,
-  getAdminOverview,
-  listCurrencies,
-  listPaymentMethods,
-  listMyDeposits,
-  createDepositRequest,
-  listAllDeposits,
-  reviewDeposit,
-  listDeskUsers,
-  adminCredit,
-  setUserFrozen,
-  setUserAdmin,
-  saveCurrency,
-  savePaymentMethod,
-  deletePaymentMethod,
-} from "@/lib/firebase/desk";
+import { getAuthMode } from "@/lib/desk/auth-mode";
+import * as firebaseApi from "@/lib/firebase/desk";
+import * as localApi from "@/lib/ops/local-api";
+
+function api() {
+  return (getAuthMode() === "local" ? localApi : firebaseApi) as typeof localApi;
+}
+
+export async function getMyOps() {
+  return api().getMyOps();
+}
+export async function claimAdmin() {
+  return api().claimAdmin();
+}
+export async function getAdminOverview() {
+  return api().getAdminOverview();
+}
+export async function listCurrencies() {
+  return api().listCurrencies();
+}
+export async function listPaymentMethods(input?: Parameters<typeof localApi.listPaymentMethods>[0]) {
+  return api().listPaymentMethods(input);
+}
+export async function listMyDeposits() {
+  return api().listMyDeposits();
+}
+export async function createDepositRequest(
+  input: Parameters<typeof localApi.createDepositRequest>[0],
+) {
+  return api().createDepositRequest(input);
+}
+export async function listAllDeposits(input?: Parameters<typeof localApi.listAllDeposits>[0]) {
+  return api().listAllDeposits(input);
+}
+export async function reviewDeposit(input: Parameters<typeof localApi.reviewDeposit>[0]) {
+  return api().reviewDeposit(input);
+}
+export async function listDeskUsers() {
+  return api().listDeskUsers();
+}
+export async function adminCredit(input: Parameters<typeof localApi.adminCredit>[0]) {
+  return api().adminCredit(input);
+}
+export async function setUserFrozen(input: Parameters<typeof localApi.setUserFrozen>[0]) {
+  return api().setUserFrozen(input);
+}
+export async function setUserAdmin(input: Parameters<typeof localApi.setUserAdmin>[0]) {
+  return api().setUserAdmin(input);
+}
+export async function saveCurrency(input: Parameters<typeof localApi.saveCurrency>[0]) {
+  return api().saveCurrency(input);
+}
+export async function savePaymentMethod(input: Parameters<typeof localApi.savePaymentMethod>[0]) {
+  return api().savePaymentMethod(input);
+}
+export async function deletePaymentMethod(
+  input: Parameters<typeof localApi.deletePaymentMethod>[0],
+) {
+  return api().deletePaymentMethod(input);
+}
