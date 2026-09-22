@@ -1,12 +1,21 @@
 import { market } from "./engine";
 import { fetchLiveQuotes } from "./quotes";
+import { pullQuotes } from "./quotes-core";
 
 let timer: ReturnType<typeof setInterval> | null = null;
 let started = false;
 
 async function refresh() {
   try {
-    const merged = await fetchLiveQuotes();
+    let merged: Record<string, number> = {};
+    try {
+      merged = await fetchLiveQuotes();
+    } catch {
+      merged = {};
+    }
+    if (Object.keys(merged).length === 0) {
+      merged = await pullQuotes();
+    }
     const keys = Object.keys(merged);
     if (keys.length === 0) {
       market.markFeed(false);
