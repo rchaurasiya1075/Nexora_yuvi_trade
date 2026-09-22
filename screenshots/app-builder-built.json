@@ -1,0 +1,38 @@
+{
+  "url": "http://127.0.0.1:8081/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "Nexora",
+      "hasCanvas": false,
+      "bodyTextLen": 6043,
+      "bodyTextHash": "1a12c35b11b8eb0a90b309016585ec57e73a55151bf8641d4fd4fd7a74daaa25",
+      "bodyTextPrefix": "N Nexora Markets Pricing News Web trader EUR/USD 1.14830 +0.31% ",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-built.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "Nexora",
+      "hasCanvas": false,
+      "bodyTextLen": 6011,
+      "bodyTextHash": "08a8e9343e0d2561ebc083f66e74c341c659671c362ea86fef1fe34e7753d044",
+      "bodyTextPrefix": "N Nexora EUR/USD 1.14830 +0.31% XAU/USD 4,385.90 -0.04% BTC/USD ",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-built-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-built.json",
+  "divergesFromBaseline": false,
+  "baselineReasons": []
+}

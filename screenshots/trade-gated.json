@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/trade",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "Nexora",
+      "hasCanvas": false,
+      "bodyTextLen": 287,
+      "bodyTextHash": "434fdaa7fcd61146a1dfb3e3961c252c720abaf1652ce1e66d809aec5039abe0",
+      "bodyTextPrefix": "N Nexora Sign in, deposit, then trade The desk is tied to your a",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/trade-gated.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "Nexora",
+      "hasCanvas": false,
+      "bodyTextLen": 287,
+      "bodyTextHash": "434fdaa7fcd61146a1dfb3e3961c252c720abaf1652ce1e66d809aec5039abe0",
+      "bodyTextPrefix": "N Nexora Sign in, deposit, then trade The desk is tied to your a",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/trade-gated-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/trade-gated.json"
+}

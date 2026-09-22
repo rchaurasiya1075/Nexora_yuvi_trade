@@ -1,0 +1,39 @@
+{
+  "url": "http://127.0.0.1:8080/trade",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "Nexora",
+      "hasCanvas": true,
+      "bodyTextLen": 3094,
+      "bodyTextHash": "52144c8fbaaad74f7a540e898c9b18b19828eb7de8cd46a706aefa7b83613e72",
+      "bodyTextPrefix": "N Nexora Trader Active · NX-DEMO Available to trade $0.00 Net eq",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/webtrader.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "Nexora",
+      "hasCanvas": true,
+      "bodyTextLen": 1834,
+      "bodyTextHash": "fef9f0f9602afbdec4ee5c6ad8e3b70f51f72a973ca39d701c0c23dc5f69faf7",
+      "bodyTextPrefix": "N Available to trade $0.00 Net equity $0.00 Unrealised P/L 0.00 ",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/webtrader-mobile.png"
+    }
+  },
+  "brandWarnings": [
+    "BRAND WARNING: this looks like a game/canvas app but src/lib/og/site.json is missing \"type\": \"x:game\". X uses og:type=x:game to present the unfurl as a game card — set it in /workspace/src/lib/og/site.json per /workspace/.grok/skills/og/SKILL.md. Do not invent x:type or overload twitter:card as the game signal.",
+    "BRAND WARNING: this looks like a game/canvas app but /workspace/public/x-banner.jpg is missing. Games need a 50:11 X feed card (1200×264 JPEG) at public/x-banner.jpg — open /workspace/.grok/skills/og/SKILL.md and finish the brand-asset pass."
+  ],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/webtrader.json"
+}
