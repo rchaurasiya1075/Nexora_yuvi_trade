@@ -118,6 +118,9 @@ class MarketEngine {
   private pricing: AccountPricing = "standard";
   private liveTarget = new Map<string, number>();
   private liveAt = new Map<string, number>();
+  /** Admin-pinned mids. While set, the tape does not drift or follow the live feed. */
+  private pins = new Map<string, number>();
+  private paused = new Set<string>();
   started = false;
   feedLive = false;
 
@@ -185,6 +188,7 @@ class MarketEngine {
     if (this.started || typeof window === "undefined") return;
     this.started = true;
     this.timer = setInterval(() => this.tick(), 280);
+    void import("@/lib/ops/control-store").then((m) => m.bootControl());
     void import("./live-feed").then((m) => m.startLiveFeed());
   }
 
@@ -230,6 +234,7 @@ class MarketEngine {
 
   /** Pull the tape toward a real-world mid without wiping the candle history. */
   anchor(symbol: string, liveMid: number) {
+    if (this.pins.has(symbol) || this.paused.has(symbol)) return;
     if (!Number.isFinite(liveMid) || liveMid <= 0) return;
     const inst = INSTRUMENT_SAFE(symbol);
     if (!inst) return;
@@ -246,6 +251,35 @@ class MarketEngine {
 
   markFeed(ok: boolean) {
     this.feedLive = ok;
+  }
+
+  setManualPrice(symbol: string, price: number) {
+    if (!Number.isFinite(price) || price <= 0) return;
+    const inst = INSTRUMENT_SAFE(symbol);
+    if (!inst) return;
+    this.pins.set(symbol, price);
+    this.liveTarget.delete(symbol);
+    this.applyMid(inst, price, Date.now(), true);
+    this.emit();
+  }
+
+  clearManualPrice(symbol: string) {
+    this.pins.delete(symbol);
+    this.emit();
+  }
+
+  setPaused(symbol: string, paused: boolean) {
+    if (paused) this.paused.add(symbol);
+    else this.paused.delete(symbol);
+    this.emit();
+  }
+
+  isPinned(symbol: string) {
+    return this.pins.has(symbol);
+  }
+
+  isPaused(symbol: string) {
+    return this.paused.has(symbol);
   }
 
   private applyMid(inst: Instrument, next: number, now: number, live: boolean) {
@@ -287,6 +321,12 @@ class MarketEngine {
 
     for (const inst of INSTRUMENTS) {
       const q = this.quotes.get(inst.symbol)!;
+      const pin = this.pins.get(inst.symbol);
+      if (pin != null) {
+        if (Math.abs(q.mid - pin) > pin * 1e-8) this.applyMid(inst, pin, now, true);
+        continue;
+      }
+      if (this.paused.has(inst.symbol)) continue;
       let drift = gauss(Math.random) * inst.vol * 0.035;
 
       if (inst.assetClass === "forex") {

@@ -4,6 +4,7 @@ import { SiteFooter, SiteHeader } from "@/components/layout/site-header";
 import { DepositDesk } from "@/components/trade/deposit-desk";
 import { RedirectToSignIn } from "@/lib/firebase/gates";
 import { useDeskSession } from "@/lib/firebase/session";
+import { addSupport, requestWithdrawal } from "@/lib/ops/control-store";
 import { listLedger, type LedgerRow } from "@/lib/trading/account-api";
 import { snapshot, useTradeStore } from "@/lib/trading/store";
 import { formatMoney } from "@/lib/utils";
@@ -17,6 +18,9 @@ export function AccountPage() {
   const positions = useTradeStore((s) => s.positions);
   const pricing = useTradeStore((s) => s.pricing);
   const [ledger, setLedger] = useState<LedgerRow[]>([]);
+  const [wd, setWd] = useState("");
+  const [note, setNote] = useState("");
+  const [msg, setMsg] = useState("");
 
   useEffect(() => {
     if (!user) return;
@@ -61,6 +65,66 @@ export function AccountPage() {
         <div className="mt-10 rounded-xl bg-bg-elevated shadow-[var(--shadow-border)]">
           <DepositDesk />
         </div>
+        <section className="mt-10 grid gap-4 md:grid-cols-2">
+          <form
+            className="rounded-xl bg-bg-elevated p-4 shadow-[var(--shadow-border)]"
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (!user) return;
+              try {
+                requestWithdrawal({
+                  userId: user.id,
+                  userName: user.name,
+                  email: user.email,
+                  amount: Number(wd),
+                  note,
+                });
+                setWd("");
+                setNote("");
+              } catch {
+                /* amount invalid */
+              }
+            }}
+          >
+            <h2 className="font-display text-2xl">Withdraw paper USD</h2>
+            <p className="mt-2 text-sm text-muted">An admin approves before the balance moves.</p>
+            <input
+              className="mt-3 w-full rounded-sm border border-border bg-transparent px-3 py-2 text-sm"
+              placeholder="Amount"
+              value={wd}
+              onChange={(e) => setWd(e.target.value)}
+            />
+            <input
+              className="mt-2 w-full rounded-sm border border-border bg-transparent px-3 py-2 text-sm"
+              placeholder="Note"
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
+            />
+            <button type="submit" className="mt-3 text-sm text-fg underline">
+              Request withdrawal
+            </button>
+          </form>
+          <form
+            className="rounded-xl bg-bg-elevated p-4 shadow-[var(--shadow-border)]"
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (!user || !msg.trim()) return;
+              addSupport({ userId: user.id, email: user.email, message: msg.trim() });
+              setMsg("");
+            }}
+          >
+            <h2 className="font-display text-2xl">Support</h2>
+            <textarea
+              className="mt-3 h-24 w-full rounded-sm border border-border bg-transparent px-3 py-2 text-sm"
+              placeholder="Message the desk"
+              value={msg}
+              onChange={(e) => setMsg(e.target.value)}
+            />
+            <button type="submit" className="mt-3 text-sm text-fg underline">
+              Send
+            </button>
+          </form>
+        </section>
         <section className="mt-10">
           <h2 className="font-display text-2xl">Funding history</h2>
           {ledger.length === 0 ? (
