@@ -24,14 +24,14 @@ export function AccountBar({ onDeposit }: { onDeposit: () => void }) {
   const alerts = useTradeStore((s) => s.alerts);
   const snap = snapshot({ balance, positions });
   const warn = Number.isFinite(snap.marginLevel) && snap.marginLevel < MARGIN_CALL;
-  const acctNo = user?.id ? `NX-${user.id.slice(-8).toUpperCase()}` : "NX-DEMO";
+  const acctNo = user?.id ? `SK-${user.id.slice(-8).toUpperCase()}` : "SK-DEMO";
   const live = market.feedLive;
 
   return (
     <div className="flex h-12 shrink-0 items-center gap-3 bg-desk px-3 text-desk-fg">
       <Logo compact />
       <Link to="/" className="hidden font-display text-base tracking-tight sm:block">
-        Nexora
+        Sikkaaa
       </Link>
       <div className="hidden items-center gap-2 border-l border-desk-line pl-3 lg:flex">
         <span className="size-1.5 rounded-full bg-buy" />
