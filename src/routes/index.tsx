@@ -78,7 +78,7 @@ function Hero() {
             </Link>
           </Button>
           <Button asChild size="lg" variant="outline">
-            <Link to="/login">Open a demo account</Link>
+            <Link to="/login">Create a Gmail account</Link>
           </Button>
         </div>
         <dl className="mt-10 grid grid-cols-3 gap-4 max-w-md">

@@ -32,7 +32,7 @@ function AdminLocked() {
         Admin tools are tied to your login.
       </p>
       <div className="mt-8">
-        <LoginForm callbackURL="/admin" />
+        <LoginForm callbackURL="/admin" admin />
       </div>
       <Link to="/" className="mt-8 text-sm text-muted hover:text-fg">
         Back
